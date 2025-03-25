@@ -67,7 +67,7 @@ export const sendEmail = async (Otp, Email) => {
 </html>`,
   };
 
-  transporter.sendMail(mailOptions, (error, info) => {
+ await transporter.sendMail(mailOptions, (error, info) => {
    
     if (error) {
       console.log("Error sending email:", error);
