@@ -18,12 +18,12 @@ const sendCookie = (user, res, message, statusCode) => {
     });
 };
 
-export const sendEmail = (Otp, Email) => {
+export const sendEmail = async (Otp, Email) => {
   
-  const transporter = nodemailer.createTransport({
+  const transporter = await nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
-    secure: true,
+    secure: false,
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,

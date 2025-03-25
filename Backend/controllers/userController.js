@@ -125,7 +125,7 @@ export const sendOtp = async (req, res, next) => {
 
 export const verifiOtp = async (req, res,next) => {
   const { OneTimePassword} = req.body;
-  console.log(OneTimePassword)
+
   const { id } = req.user;
 
   if (!OneTimePassword) return next(new ErrorHandler("Otp is required!", 404));

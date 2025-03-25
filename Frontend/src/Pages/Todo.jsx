@@ -75,7 +75,7 @@ const Todo = () => {
     console.log(id);
     try {
       const { data } = await axios.put(
-        `${server}/api/v1/task/updateTask/${id}`,
+        `${server}/api/v1/task/markTask/${id}`,
         {},
         {
           headers: {
