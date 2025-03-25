@@ -7,7 +7,7 @@ import { UserContext } from "../main";
 
 const Todo = () => {
    
-  const {loading,setLoading} = useContext(UserContext)
+  const {loading,setLoading,user} = useContext(UserContext)
   const [task, setTask] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [formData, setFormData] = useState({
@@ -149,7 +149,7 @@ const Todo = () => {
         </form>
         <ul className="space-y-2">
           {task?.map((task) => (
-            <li key={task._id} className=" bg-gray-200 p-2 rounded-md">
+            <li key={task._id} className={`${user.iscompleted ? " text-red-400, text-white" : "bg-gray-200"}  p-2 rounded-md`}>
               <div className=" flex justify-between items-center">
                 <span className="text-lg">{task.title}</span>
                 <div className="flex items-center justify-cente">

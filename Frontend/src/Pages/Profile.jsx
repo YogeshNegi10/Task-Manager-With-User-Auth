@@ -210,7 +210,7 @@ const Profile = () => {
               <p className="text-sm font-medium text-gray-500">Password</p>
               <p className="flex justify-center items-center mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2  relative ">
                 <input
-                  className="text-center outline-0 "
+                  className="text-center outline-0 caret-transparent "
                   type={toggle ? "password" : "text"}
                   value={user.password}
                   readOnly={toggle}
