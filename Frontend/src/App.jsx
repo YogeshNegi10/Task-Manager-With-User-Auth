@@ -16,7 +16,7 @@ import ErrorPage from "./Pages/ErrorPage";
 
 function App() {
 
-  const {setUser,Authenticated,setAuthenticated} = useContext(UserContext)
+  const {setUser,Authenticated,setAuthenticated,refresh} = useContext(UserContext)
 
     useEffect( ()=>{
 
@@ -39,7 +39,7 @@ function App() {
         
       }
       fetchData()
-    },[Authenticated])
+    },[Authenticated,refresh])
     
 
   return (

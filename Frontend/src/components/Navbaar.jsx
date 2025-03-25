@@ -8,7 +8,7 @@ import { Tooltip as ReactTooltip } from 'react-tooltip'
 
 const Navbaar = () => {
   const navigate = useNavigate();
-  const { Authenticated, setAuthenticated } = useContext(UserContext);
+  const { Authenticated, setAuthenticated,user } = useContext(UserContext);
 
   const handleLogout = async () => {
     try {
@@ -79,9 +79,10 @@ const Navbaar = () => {
                 } text-2xl hover:text-blue-500 `
               }
             >
-              <i class="fa-solid fa-circle-user" data-tooltip-id="profile"
+              <i class="fa-solid fa-circle-user relative" data-tooltip-id="profile"
               data-tooltip-content="Profile" ></i>
               <ReactTooltip  style={{fontSize:12 }} id="profile"/>
+             {user?.emailVerified ? "" : <i class="fa-solid fa-star text-red-500 text-[10px] absolute"></i>}
             </NavLink>
           </li>
         ) : (

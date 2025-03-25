@@ -9,6 +9,7 @@ const AppWrapper = () => {
   const [Authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({});
+  const [refresh, setRefresh] = useState(false);
   const [error, setError] = useState('');
 
   return (
@@ -22,6 +23,8 @@ const AppWrapper = () => {
         setLoading,
         error,
         setError,
+        setRefresh,
+        refresh
       }}
     >
       <App />

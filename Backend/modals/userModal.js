@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-
 // Making userSchema Here to Store All the necessary Details
 
 const userSchema = new mongoose.Schema({
@@ -15,7 +14,19 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    require:true
+    require: true,
+  },
+  emailVerified:{
+    type: Boolean,
+    default:false
+  },
+  otp: {
+    type: String,
+    default: "",
+  },
+  otpExpiresAt: {
+    type: Date,
+    default:""
   },
   createdAt: {
     type: Date,
@@ -23,5 +34,4 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-
-export const User = mongoose.model('User',userSchema);
+export const User = mongoose.model("User", userSchema);
