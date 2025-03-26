@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { Link, Navigate } from "react-router-dom";
 import { server } from "../../utils/api";
 import { UserContext } from "../main";
-import ClipLoader from "react-spinners/ClipLoader";
+
 
 
 const SignUp = () => {
@@ -103,22 +103,11 @@ const SignUp = () => {
               className="active:scale-98 transition-all ease-in-out cursor-pointer w-full text-center py-3 rounded bg-blue-400 text-white hover:bg-green-dark focus:outline-none my-1"
             
             >
-              Create Account
+            { loading ?<i class="fa-solid fa-spinner animate-spin text-2xl"></i> : "Create Account"}
             </button>
           
           </form>
-          {loading ? (
-              <div className=" flex justify-center items-center absolute top-[40%] left-[42%]">
-                <ClipLoader
-                  loading={loading}
-                  size={50}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                />
-              </div>
-            ) : (
-              ""
-            )}
+          
 
           <div className="text-center text-sm text-grey-dark mt-4">
             By signing up, you agree to the

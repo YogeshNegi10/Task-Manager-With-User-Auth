@@ -1,36 +1,23 @@
-import React, { useContext, useState } from "react";
+import React, {  useContext, useState } from "react";
 import { UserContext } from "../main";
+import axios from "axios";
+import { OtpVerification } from "../components/OtpVerification";
 import { server } from "../../utils/api";
 import toast from "react-hot-toast";
-import axios from "axios";
 
 const Profile = () => {
-  const { user, setRefresh } = useContext(UserContext);
-
+  const { user, setRefresh,loading,setLoading} = useContext(UserContext);
   const [toggle, setToggle] = useState(true);
   const [popup, setPopup] = useState(false);
-
-  const [otp, setOtp] = useState({
-    digitOne: "",
-    digitTwo: "",
-    digitThree: "",
-    digitFour: "",
-  });
 
 
   const handleToggle = () => {
     setToggle(!toggle);
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setOtp((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
+   
   const handleVerification = async () => {
+    setLoading(true)
     try {
       const { data } = await axios.post(
         `${server}/api/v1/user/verify-email`,
@@ -44,133 +31,29 @@ const Profile = () => {
       );
 
       toast.success(data.message);
+      setLoading(false)
       setPopup(true);
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
       setRefresh(false);
+      setLoading(false)
       setPopup(false);
     }
   };
-
-  const handleVerified = async (e) => {
-    e.preventDefault();
-    const OneTimePassword =
-      otp.digitOne + otp.digitTwo + otp.digitThree + otp.digitFour;
-
-    try {
-      const { data } = await axios.post(
-        `${server}/api/v1/user/verify-Otp`,
-        {
-          OneTimePassword,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      );
-
-      toast.success(data.message);
-      setRefresh(true);
-      setPopup(false);
-    } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message);
-      setRefresh(false);
-    }
-  };
-
+  
   return popup ? (
-    <div class="relative flex min-h-screen flex-col justify-center overflow-hidden py-12">
-      <div class="relative bg-white px-6 pt-10 pb-9 shadow-xl mx-auto w-full max-w-lg rounded-2xl">
-        <div class="mx-auto flex w-full max-w-md flex-col space-y-16">
-          <div class="flex flex-col items-center justify-center text-center space-y-2">
-            <div class="font-semibold text-3xl">
-              <p>Email Verification</p>
-            </div>
-            <div class="flex flex-row text-sm font-medium text-gray-400">
-              <p>We have sent a code to your email {user.email}</p>
-            </div>
-          </div>
-
-          <div>
-            <form action="" method="post" onSubmit={(e) => handleVerified(e)}>
-              <div class="flex flex-col space-y-16">
-                <div class="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
-                  <div class="w-14 h-14">
-                    <input
-                      class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-400 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                      type="text"
-                      name="digitOne"
-                      id=""
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div class="w-14 h-14 ">
-                    <input
-                      class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-400 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                      type="text"
-                      name="digitTwo"
-                      id=""
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div class="w-14 h-14 ">
-                    <input
-                      class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-400 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                      type="text"
-                      name="digitThree"
-                      id=""
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div class="w-14 h-14 ">
-                    <input
-                      class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-400 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                      type="text"
-                      name="digitFour"
-                      id=""
-                      onChange={handleChange}
-                    />
-                  </div>
-                </div>
-
-                <div class="flex flex-col space-y-5">
-                  <div>
-                    <button
-                      onClick={handleVerified}
-                      class=" cursor-pointer flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-blue-700 border-none text-white text-sm shadow-sm"
-                    >
-                      Verify Account
-                    </button>
-                  </div>
-
-                  <div class="flex flex-row items-center justify-center text-center text-sm font-medium space-x-1 text-gray-500">
-                    <p>Didn't recieve code?</p>{" "}
-                    <a
-                      class="flex flex-row items-center text-blue-600"
-                      href="http://"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Resend
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+    <OtpVerification setPopup={setPopup} />
   ) : (
+<>
+   
     <div className="bg-white  shadow flex justify-center  border  text-center min-h-screen">
+      
       <div className=" w-1/2 mt-20">
+     
         <div className="px-4 py-5 sm:px-6 ">
           <h1 className=" leading-6 text-center text-3xl font-medium text-gray-900 mb-5">
-            Welcome,{" "}
+            Welcome,
             <span className=" text-blue-700 text-[23px] md:text-4xl mt-4  ">
               {user.name}
             </span>
@@ -199,9 +82,9 @@ const Profile = () => {
                 ) : (
                   <span
                     onClick={handleVerification}
-                    className=" animate-bounce text-[10px] absolute right-[-30px] top-0 bottom-3  md:top-4 md:right-14 cursor-pointer text-red-600 font-bold    " 
+                    className=" animate-bounce text-[10px] absolute right-[-30px] top-0 bottom-3  md:top-4 md:right-14 cursor-pointer text-red-600 font-bold    "
                   >
-                    Verify Email
+                    {loading ? 'verifying...'  : "Verify Email"}
                   </span>
                 )}
               </p>
@@ -231,7 +114,9 @@ const Profile = () => {
           </div>
         </div>
       </div>
+ 
     </div>
+    </>
   );
 };
 

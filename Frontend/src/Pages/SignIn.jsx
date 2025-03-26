@@ -3,9 +3,8 @@ import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { server } from "../../utils/api";
-import { Navigate, useNavigate } from "react-router";
+import { Navigate } from "react-router";
 import { UserContext } from "../main";
-import ClipLoader from "react-spinners/ClipLoader";
 
 const SignIn = () => {
   const { Authenticated, setAuthenticated,loading,setLoading } = useContext(UserContext);
@@ -94,22 +93,9 @@ const SignIn = () => {
               disabled={loading}
               className="active:scale-98 transition-all ease-in-out cursor-pointer w-full text-center py-3 rounded bg-blue-400 text-white hover:bg-green-dark focus:outline-none my-1"
             >
-              Login
+             { loading ?<i class="fa-solid fa-spinner animate-spin text-2xl"></i> : "Login"}
             </button>
           </form>
-
-          {loading ? (
-              <div className=" flex justify-center items-center absolute top-[40%] left-[42%]">
-                <ClipLoader
-                  loading={loading}
-                  size={50}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                />
-              </div>
-            ) : (
-              ""
-            )}
         </div>
 
         <div className="text-grey-dark mt-6">

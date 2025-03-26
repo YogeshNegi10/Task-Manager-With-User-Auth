@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { UserContext } from '../main';
 
 const Home = () => {
-    const{Authenticated,setAuthenticated} = useContext(UserContext)
+    const{Authenticated} = useContext(UserContext)
 
   return (
     
@@ -13,7 +13,7 @@ const Home = () => {
             <h1 className="text-5xl font-bold">Organize Your Life with Ease</h1>
             <p className="mt-4 text-lg">A simple yet powerful todo app to keep you productive.</p>
             <Link to={Authenticated ? "/todo":'/signup'}><button className=" animate-bounce cursor-pointer mt-6 px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow-md hover:bg-gray-200">
-              Get Started
+             {Authenticated ? 'Lets Go!' : "Get Started"}
             </button>
             </Link>
           </section>
