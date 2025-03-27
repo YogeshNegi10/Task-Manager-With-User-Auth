@@ -23,7 +23,7 @@ connectDb();
 app.use(express.json());
 app.use(cookieParser())
 app.use(cors({
-     origin:[process.env.FRONTED_URL,process.env.FRONTED_URL2],
+     origin:[process.env.FRONTEND_URL,process.env.FRONTEND_URL2],
      methods:['GET','POST','PUT','DELETE'],
      credentials:true
 }))
