@@ -12,8 +12,8 @@ const todoSchema = new mongoose.Schema({
     required: true,
   },
   iscompleted:{
-      type:Boolean,
-      default:false
+      type:String,
+      default:"in Progress"
   },
   user:{
     type:mongoose.Schema.Types.ObjectId,

@@ -8,6 +8,7 @@ const Todo = () => {
   const { loading, setLoading } = useContext(UserContext);
   const [task, setTask] = useState([]);
   const [creating, setCreating] = useState(false);
+  const [modal, setModal] = useState(false);
 
   const [refresh, setRefresh] = useState(false);
   const [formData, setFormData] = useState({
@@ -56,7 +57,6 @@ const Todo = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-
       setLoading(true);
       try {
         await axios
@@ -72,18 +72,20 @@ const Todo = () => {
         setLoading(false);
       } catch (error) {
         console.log(error);
-        setLoading(false)
+        setLoading(false);
       }
     };
 
     fetchData();
   }, [refresh]);
 
-  const markTheTask = async (id) => {
+  const markTheTask = async (e,id) => {
+      const value = e.target.value
+      
     try {
       const { data } = await axios.put(
         `${server}/api/v1/task/markTask/${id}`,
-        {},
+        {value},
         {
           headers: {
             "Content-Type": "application/json",
@@ -136,8 +138,60 @@ const Todo = () => {
     }
   };
 
+  const handleClick = () => {
+    setModal(!modal);
+  };
+
   return (
-    <div className=" flex justify-center  m-5 ">
+    <div className=" flex justify-center  m-5  ">
+      {task.length > 0 ? (
+        <i
+          onClick={handleClick}
+          class=" animate-pulse fa-solid fa-recycle text-2xl absolute left-2 mt-2 cursor-pointer"
+        ></i>
+      ) : (
+        ""
+      )}
+      <div
+        className={`${
+          modal ? " transform translate-x-[100]" : ""
+        } transition-all ease-initial   transform translate-x-[-100%] z-10 absolute left-0 top-16 h-screen bg-blue-300 w-1/2 px-3 shadow-lg `}
+      >
+        <div className=" flex justify-end">
+          <i
+            onClick={handleClick}
+            class="fa-solid fa-x text-2xl text-right mt-2 cursor-pointer  "
+          ></i>
+        </div>
+        <h1 className=" mb-10 text-md ">Deleted Items List</h1>
+        <ul className="space-y-2">
+          {task?.map((task) => (
+            <li
+              key={task._id}
+              className={`${
+                task.iscompleted ? "  bg-green-500 text-white" : ""
+              } bg-gray-300 p-2 rounded-md`}
+            >
+              <div className=" flex justify-between items-center">
+                <span className="text-lg">{task.title}</span>
+                <div className="flex text-sm items-center justify-cente">
+                  <select
+                    className="w-full outline-0 p-1 text-sm  rounded-md bg-white text-gray-700"
+                  >
+                    <option value="in-progress">In Progress</option>
+                    <option value="completed">Completed</option>
+                  </select>
+                  <i
+                    onClick={(e) => handleDelete(task._id)}
+                    className="fa-solid fa-xmark text-2xl text-red-600 cursor-pointer ml-3"
+                  ></i>
+                </div>
+              </div>
+              <p className=" text-[12px] mt-3">{task.description}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
       <div className="p-6 rounded-lg shadow-lg md:w-1/2">
         <h2 className="font-semibold text-gray-800 mb-4 text-center text-3xl">
           Write A Task...
@@ -168,40 +222,48 @@ const Todo = () => {
             disabled={creating}
             className="bg-blue-500 cursor-pointer active:scale-98 transition-all ease-in-out text-white px-4 py-2 rounded-r-md hover:bg-blue-600"
           >
-            {creating ?  <i class="fa-solid fa-spinner animate-spin text-2xl"></i> : "Add Task"} 
+            {creating ? (
+              <i class="fa-solid fa-spinner animate-spin text-2xl"></i>
+            ) : (
+              "Add Task"
+            )}
           </button>
         </div>
         {/* </form> */}
-       { loading ? <i class="fa-solid fa-spinner animate-spin text-2xl"></i> : task.length < 1 ? <h1 className=" text-sm">No Tasks Yet!</h1>: <ul className="space-y-2">
-          {task?.map((task) => (
-            <li
-              key={task._id}
-              className={`${
-                task.iscompleted ? "  bg-green-500 text-white" : ""
-              } bg-gray-300 p-2 rounded-md`}
-            >
-              <div className=" flex justify-between items-center">
-                <span className="text-lg">{task.title}</span>
-                <div className="flex items-center justify-cente">
-                  <input
-                    onChange={(e) => markTheTask(task._id)}
-                    className="cursor-pointer w-4 h-4"
-                    type="checkbox"
-                    name="iscompleted"
-                    id=""
-                    checked={task.iscompleted}
-                  />
-                  <i
-                    onClick={(e) => handleDelete(task._id)}
-                    className="fa-solid fa-xmark text-2xl text-red-600 cursor-pointer ml-3"
-                  ></i>
+        {loading ? (
+          <i class="fa-solid fa-spinner animate-spin text-2xl"></i>
+        ) : task.length < 1 ? (
+          <h1 className=" text-sm">No Tasks Yet!</h1>
+        ) : (
+          <ul className="space-y-2">
+            {task?.map((task) => (
+              <li
+                key={task._id}
+                className={`${
+                  task.iscompleted ? "  bg-green-500 text-white" : ""
+                } bg-gray-300 p-2 rounded-md`}
+              >
+                <div className=" flex justify-between items-center">
+                  <span className="text-lg">{task.title}</span>
+                  <div className="flex items-center justify-cente">
+                  <select
+                  onChange={(e) => markTheTask(e,task._id)}
+                    className="w-full outline-0 p-1 text-sm  rounded-md bg-white text-gray-700"
+                  >
+                    <option value="in-progress">In Progress</option>
+                    <option value="completed">Completed</option>
+                  </select>
+                    <i
+                      onClick={(e) => handleDelete(task._id)}
+                      className="fa-solid fa-xmark text-2xl text-red-600 cursor-pointer ml-3"
+                    ></i>
+                  </div>
                 </div>
-              </div>
-              <p className=" text-[12px] mt-3">{task.description}</p>
-            </li>
-          ))}
-        </ul>
-       }
+                <p className=" text-[12px] mt-3">{task.description}</p>
+              </li>
+            ))}
+          </ul>
+        )}
 
         {task.length > 1 ? (
           <div className=" text-right mt-3">

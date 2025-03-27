@@ -46,14 +46,18 @@ export const getMyTask = async (req, res, next) => {
 // Function To marks My Task or Todo..
 
 export const markTask = async (req, res, next) => {
+  const {value} = req.body
+
+  const { id } = req.params;
+
   try {
-    const { id } = req.params;
+  
 
     const task = await Todo.findById(id);
 
     if (!task) return next(new ErrorHandler("Invalid Id!", 404));
 
-    task.iscompleted = !task.iscompleted;
+    task.iscompleted = value;
 
     await task.save();
 
