@@ -81,7 +81,7 @@ const Todo = () => {
 
   const markTheTask = async (e,id) => {
       const value = e.target.value
-      
+       console.log(value)
     try {
       const { data } = await axios.put(
         `${server}/api/v1/task/markTask/${id}`,
@@ -155,7 +155,7 @@ const Todo = () => {
       <div
         className={`${
           modal ? " transform translate-x-[100]" : ""
-        } transition-all ease-initial   transform translate-x-[-100%] z-10 absolute left-0 top-16 h-screen bg-blue-300 w-1/2 px-3 shadow-lg `}
+        } transition-all ease-initial   transform translate-x-[-100%] z-10 absolute left-0 top-16 h-screen bg-blue-100 w-screen md:w-1/2 px-3 shadow-lg `}
       >
         <div className=" flex justify-end">
           <i
@@ -163,13 +163,17 @@ const Todo = () => {
             class="fa-solid fa-x text-2xl text-right mt-2 cursor-pointer  "
           ></i>
         </div>
-        <h1 className=" mb-10 text-md ">Deleted Items List</h1>
+        <h1 className=" mb-4 text-md ">Deleted Items List   <i
+            onClick={handleClick}
+            class="fa-solid fa-trash text-sm text-right ml-2 cursor-pointer  "
+          ></i> </h1>
         <ul className="space-y-2">
           {task?.map((task) => (
+          
             <li
               key={task._id}
               className={`${
-                task.iscompleted ? "  bg-green-500 text-white" : ""
+                task.iscompleted == "completed" ? "bg-green-500 text-white" : ""
               } bg-gray-300 p-2 rounded-md`}
             >
               <div className=" flex justify-between items-center">
@@ -240,7 +244,7 @@ const Todo = () => {
               <li
                 key={task._id}
                 className={`${
-                  task.iscompleted ? "  bg-green-500 text-white" : ""
+                 task.iscompleted == "completed" ? "bg-green-500 text-white" : ""
                 } bg-gray-300 p-2 rounded-md`}
               >
                 <div className=" flex justify-between items-center">
@@ -249,8 +253,9 @@ const Todo = () => {
                   <select
                   onChange={(e) => markTheTask(e,task._id)}
                     className="w-full outline-0 p-1 text-sm  rounded-md bg-white text-gray-700"
+                    value={task.iscompleted}
                   >
-                    <option value="in-progress">In Progress</option>
+                    <option value="in-progress">In-Progress</option>
                     <option value="completed">Completed</option>
                   </select>
                     <i
