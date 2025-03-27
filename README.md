@@ -1,4 +1,4 @@
-Live Demo At - https://task-manger-with-user-auth.vercel.app
+Live Demo At - https://task-manager-with-user-auth.vercel.app
 
 Task Manager App - MERN Stack The Task Manager App is a full-stack web application built using the MERN stack (MongoDB, Express.js, React.js, Node.js). It allows users to efficiently manage their tasks with full CRUD (Create, Read, Update, Delete) operations, ensuring a seamless and interactive experience.
 
