@@ -6,22 +6,22 @@ import { actualPassword } from "../controllers/userController.js";
 // Function For User Authentication...
 
 export const auth = async (req, res, next) => {
- 
-  // try {
-  //   const { token } = req.cookies;
 
-  //   if (!token)
+  try {
+    const { token } = req.cookies;
 
-  //     return next(new ErrorHandler('Login First..',404))
+    if (!token)
 
-  //   let decoded = jwt.verify(token, process.env.JWT_SECRET);
+      return next(new ErrorHandler('Login First..',404))
 
-  //   req.user = await User.findById(decoded.token);
-  //   req.user.password = actualPassword
-  //   next();
+    let decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-  // } catch (error) {
-  //   next(error)
+    req.user = await User.findById(decoded.token);
+    req.user.password = actualPassword
+    next();
+
+  } catch (error) {
+    next(error)
   
-  // }
+  }
 };

@@ -26,11 +26,11 @@ const userSchema = new mongoose.Schema({
   },
   otpExpiresAt: {
     type: Date,
-    default:""
+    default:Date.now()
   },
   createdAt: {
     type: Date,
-    default: new Date(Date.now()),
+    default: Date.now(),
   },
 });
 
