@@ -9,7 +9,7 @@ const sendCookie = (user, res, message, statusCode) => {
     .cookie("token", token, {
       expires: new Date(Date.now() + 1500 * 1000),
       httpOnly: true,
-      // sameSite:"none",
+      sameSite:"none",
       secure:true
     })
     .json({
