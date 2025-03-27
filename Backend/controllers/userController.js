@@ -31,7 +31,7 @@ export const createUser = async (req, res, next) => {
 
     actualPassword = password;
 
-    sendCookie(user, res, "Registered Successfully!", 201);
+    // sendCookie(user, res, "Registered Successfully!", 201);
   } catch (error) {
     next(error);
   }
@@ -49,7 +49,9 @@ export const loginUser = async (req, res, next) => {
     const user = await User.findOne({ email });
 
     if (!user) {
+
       return next(new ErrorHandler("Register First Please!", 404));
+
     } else {
       const IsMatched = await bcrypt.compare(password, user.password);
 
@@ -59,7 +61,7 @@ export const loginUser = async (req, res, next) => {
       if (IsMatched) {
         actualPassword = password
       }
-      sendCookie(user, res, `Welcome Back, ${user.name}`, 200);
+      // sendCookie(user, res, `Welcome Back, ${user.name}`, 200);
     }
   } catch (error) {
     next(error);
