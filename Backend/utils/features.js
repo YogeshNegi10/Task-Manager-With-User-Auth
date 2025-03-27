@@ -51,7 +51,7 @@ export const sendEmail = async (Otp, Email) => {
     </style>
 </head>
 <body>
-    <div class="container">
+    <div className="container flex justify-center items-center ">
         <div class="logo">
             <h1>Task Manager</h1>
         </div>
