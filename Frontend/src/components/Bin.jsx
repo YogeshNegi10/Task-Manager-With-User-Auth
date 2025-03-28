@@ -57,7 +57,6 @@ const Bin = ({setRefresh,refreshBin,setRefreshBin}) => {
        }
      );
 
-
      toast.success(data.message);
      setRefreshBin((prev) => !prev);
      setRefresh((prev) => !prev);
