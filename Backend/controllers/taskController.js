@@ -73,6 +73,8 @@ export const markTask = async (req, res, next) => {
   }
 };
 
+// Function To Update My Task or Todo..
+
 export const updateTask = async (req, res, next) => {
   
   const { id } = req.params;
@@ -125,6 +127,8 @@ export const deleteTask = async (req, res, next) => {
 };
 
 
+// Function To Delete All Task or Todo..
+
 export const deleteAllTask = async (req, res, next) => {
   try {
     await Bin.deleteMany();
@@ -138,6 +142,7 @@ export const deleteAllTask = async (req, res, next) => {
   }
 };
 
+// Function To Push My Task or Todo to Bin..
 
 export const pushToBin = async (req, res, next) => {
 
@@ -158,7 +163,7 @@ export const pushToBin = async (req, res, next) => {
 
     res.status(201).json({
       sucess: true,
-      message: "task added to Bin !",
+      message: "Task added to Bin !",
      
     });
 
@@ -170,6 +175,8 @@ export const pushToBin = async (req, res, next) => {
   
 };
 
+
+// Function To Fetch My Bin Task or Todo..
 export const fetchBin = async (req, res, next) => {
   try {
     const { id } = req.user;
@@ -179,6 +186,34 @@ export const fetchBin = async (req, res, next) => {
     res.status(200).json({
       message: "Your Bin Tasks!",
       tasks,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+// Function To Restore My Task or Todo from Bin..
+export const restoreFromBin = async (req, res, next) => {
+
+  const { id } = req.params;
+
+  try {
+   
+    const task = await Bin.findById(id);
+
+    if (!task) return next(new ErrorHandler("Invalid Id!", 404));
+
+    await Todo.create({
+      ...task._doc,
+      user: task.user,   
+    });
+
+    await task.deleteOne();
+
+    res.status(200).json({
+      message: "Restored Successfully!",
+      task,
     });
   } catch (error) {
     next(error);

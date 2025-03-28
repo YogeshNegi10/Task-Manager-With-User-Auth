@@ -125,6 +125,8 @@ export const sendOtp = async (req, res, next) => {
   }
 };
 
+
+// To Verify Otp...
 export const verifiOtp = async (req, res,next) => {
   const { OneTimePassword} = req.body;
 

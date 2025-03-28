@@ -8,6 +8,7 @@ import { actualPassword } from "../controllers/userController.js";
 export const auth = async (req, res, next) => {
 
   try {
+    
     const { token } = req.cookies;
 
     if (!token)
