@@ -14,13 +14,17 @@ const binSchema = new mongoose.Schema({
          type:String,
          default:"in Progress"
    },
+   dueDate: {
+      type: Date,
+      default:""
+    },
    user:{
       type:mongoose.Schema.Types.ObjectId,
       ref:'User'
    },
    createdAt: {
       type: Date,
-      default:Date.now()
+      default:new Date(Date.now())
    },
 });
 

@@ -174,7 +174,16 @@ const Bin = ({setRefresh,refreshBin,setRefreshBin}) => {
                   ></i>
                 </div>
               </div>
-              <p className=" text-[12px] mt-3">{task.description}</p>
+              <div className=" flex justify-between items-center mt-3 ">
+                    <p className=" text-[12px] ">{task.description}</p>
+                    <span
+                      className={`${
+                        task.iscompleted == "completed" ? " line-through" : ""
+                      } text-[12px]`}
+                    >
+                      Due Date :{new Date(task.dueDate).toLocaleDateString()}
+                    </span>
+                  </div>
             </li>
           ))}
         </ul>

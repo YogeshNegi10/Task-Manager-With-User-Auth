@@ -19,9 +19,14 @@ const todoSchema = new mongoose.Schema({
     type:mongoose.Schema.Types.ObjectId,
     ref:'User'
   },
+
+  dueDate: {
+    type: Date,
+    default:""
+  },
   createdAt: {
     type: Date,
-    default:Date.now()
+    default:new Date(Date.now())
   },
 });
 

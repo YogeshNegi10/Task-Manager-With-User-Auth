@@ -116,7 +116,7 @@ const SignUp = () => {
               href="#"
             >
               Terms of Service
-            </a>{" "}
+            </a>
             and
             <a
               className="no-underline border-b border-grey-dark text-grey-dark"

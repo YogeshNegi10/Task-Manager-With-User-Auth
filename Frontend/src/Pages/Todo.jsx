@@ -17,6 +17,7 @@ const Todo = () => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
+    date: "",
   });
 
   // Handling the creation of a new task
@@ -55,6 +56,7 @@ const Todo = () => {
       setFormData({
         title: "",
         description: "",
+        date:''
       });
     } catch (error) {
       toast.error(error.response.data.message);
@@ -173,6 +175,21 @@ const Todo = () => {
               placeholder="Write a Description..."
               class="flex-1 p-2 border rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
+            <div className=" flex justify-between">
+              <div>
+                <label htmlFor="">Due Date : </label>
+                <input
+                  type="date"
+                  name="date"
+                  onChange={handleChange}
+                  value={formData.date}
+                   dateFormat="yyyy/MM/dd"
+                  placeholder="Add a new task..."
+                  class="flex-1 py-1 px-1 border rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+              </div>
+
+           </div>
 
             <button
               onClick={handleSubmit}
@@ -220,7 +237,17 @@ const Todo = () => {
                       ></i>
                     </div>
                   </div>
-                  <p className=" text-[12px] mt-3">{task.description}</p>
+                  <div className=" flex justify-between items-center mt-3 ">
+                    <p className=" text-[12px] ">{task.description}</p>
+                    <span
+                      className={`${
+                        task.iscompleted == "completed" ? " line-through" : ""
+                      } text-[12px]`}
+                    >
+                    
+                      Due Date :{new Date(task.dueDate).toLocaleDateString()}
+                    </span>
+                  </div>
                 </li>
               ))}
             </ul>

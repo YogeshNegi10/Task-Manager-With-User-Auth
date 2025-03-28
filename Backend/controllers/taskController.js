@@ -6,14 +6,22 @@ import ErrorHandler from "../utils/error.js";
 
 export const addTask = async (req, res, next) => {
   try {
-    const { title, description } = req.body;
+    const { title, description,date } = req.body;
 
-    if (!title || !description)
+    if (!title || !description || !date)
       return next(new ErrorHandler("All fields are required.", 404));
 
-   const todo = await Todo.create({
+      const dueDate = new Date(date)
+      const today = new Date()
+      today.setHours(0, 0, 0, 0);
+
+      if (dueDate < today)  return next(new ErrorHandler("Selected date cannot be in the past.", 404));
+  
+
+    const todo = await Todo.create({
       title,
       description,
+      dueDate,
       user: req.user._id,
     });
 
@@ -22,6 +30,7 @@ export const addTask = async (req, res, next) => {
       message: "task Created successfully!",
       todo: todo._id
     });
+
   } catch (error) {
     console.log(error);
     next(error);
@@ -35,6 +44,7 @@ export const getMyTask = async (req, res, next) => {
     const { id } = req.user;
 
     const tasks = await Todo.find({ user: id });
+
 
     res.status(200).json({
       message: "Your Task!",
