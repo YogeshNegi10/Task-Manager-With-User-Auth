@@ -8,7 +8,7 @@ import { Tooltip as ReactTooltip } from 'react-tooltip'
 
 const Navbaar = () => {
   const navigate = useNavigate();
-  const { Authenticated, setAuthenticated,user } = useContext(UserContext);
+  const { Authenticated, setAuthenticated,user,loading } = useContext(UserContext);
 
   const handleLogout = async () => {
     try {
@@ -129,7 +129,7 @@ const Navbaar = () => {
               } hover:underline cursor-pointer"} hover:text-blue-500 `
             }
           >
-            <i class="fa-solid fa-user-plus text-lg" data-tooltip-id="signUp"
+            <i class={`fa-solid fa-user-plus text-lg {loading ? " pointer-events-none":" pointer-events-auto"}`} data-tooltip-id="signUp"
               data-tooltip-content="SignUp!"> </i>
                <ReactTooltip  style={{fontSize:12 }} id="signUp" />
               
