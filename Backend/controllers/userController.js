@@ -32,6 +32,7 @@ export const createUser = async (req, res, next) => {
     actualPassword = password;
 
     sendCookie(user, res, "Registered Successfully!", 201);
+    
   } catch (error) {
     next(error);
   }

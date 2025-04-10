@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 
 const sendCookie = (user, res, message, statusCode) => {
+  
   const token = jwt.sign({ token: user._id }, process.env.JWT_SECRET);
 
   res

@@ -56,7 +56,7 @@ const Todo = () => {
       setFormData({
         title: "",
         description: "",
-        date:''
+        date: "",
       });
     } catch (error) {
       toast.error(error.response.data.message);
@@ -180,16 +180,14 @@ const Todo = () => {
                 <label htmlFor="">Due Date : </label>
                 <input
                   type="date"
-                  name="date"
                   onChange={handleChange}
                   value={formData.date}
-                   dateFormat="yyyy/MM/dd"
-                  placeholder="Add a new task..."
-                  class="flex-1 py-1 px-1 border rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  name="date"
+                  id=""
+                  className="flex-1  py-1 px-1 border rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
               </div>
-
-           </div>
+            </div>
 
             <button
               onClick={handleSubmit}
@@ -244,8 +242,12 @@ const Todo = () => {
                         task.iscompleted == "completed" ? " line-through" : ""
                       } text-[12px]`}
                     >
-                    
-                      Due Date :{new Date(task.dueDate).toLocaleDateString()}
+                      Due Date :{" "}
+                      {new Date(task.dueDate).toLocaleDateString("en-GB", {
+                        day: "2-digit",
+                        month: "long",
+                        year: "numeric",
+                      })}
                     </span>
                   </div>
                 </li>
