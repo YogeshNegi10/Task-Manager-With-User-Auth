@@ -100,12 +100,12 @@ const SignIn = () => {
 
         <div className="text-grey-dark mt-6">
           Didn't have an account?
-          <Link
+          { loading ? '' : <Link
             to="/signup"
             className="no-underline border-b border-blue text-blue ml-3"
           >
             Sign Up
-          </Link>
+          </Link>}
           .
         </div>
       </div>
