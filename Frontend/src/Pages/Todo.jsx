@@ -139,7 +139,7 @@ const Todo = () => {
   return (
     <>
       {loading ? (
-        <div className="fixed top-0 left-0 w-screen h-screen backdrop-blur-sm flex justify-center items-center z-50">
+        <div className="fixed top-0 left-0 w-screen h-screen bg-black opacity-98 flex justify-center items-center z-50">
           <i class="fa-solid fa-spinner animate-spin text-2xl"></i>
         </div>
       ) : (
