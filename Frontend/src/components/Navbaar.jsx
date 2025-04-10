@@ -129,8 +129,8 @@ const Navbaar = () => {
               } hover:underline cursor-pointer"} hover:text-blue-500 `
             }
           >
-            { loading ? <i class="fa-solid fa-user-plus text-lg" data-tooltip-id="signUp"
-              data-tooltip-content="SignUp!"> </i> : ""}
+            { loading ? "" :<i class="fa-solid fa-user-plus text-lg" data-tooltip-id="signUp"
+              data-tooltip-content="SignUp!"> </i> }
                <ReactTooltip  style={{fontSize:12 }} id="signUp" /> 
               
           </NavLink>
