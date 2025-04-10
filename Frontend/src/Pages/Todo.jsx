@@ -242,7 +242,7 @@ const Todo = () => {
                         task.iscompleted == "completed" ? " line-through" : ""
                       } text-[12px]`}
                     >
-                      Due Date :{" "}
+
                       {new Date(task.dueDate).toLocaleDateString("en-GB", {
                         day: "2-digit",
                         month: "long",
