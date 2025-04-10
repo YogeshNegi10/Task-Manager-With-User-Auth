@@ -245,7 +245,12 @@ const Todo = () => {
                       } text-[12px]`}
                     >
                     
-                      Due Date :{new Date(task.dueDate).toLocaleDateString()}
+                      Due Date :
+                      {new Date(task.dueDate).toLocaleDateString("en-GB", {
+                        day: "2-digit",
+                        month: "long",
+                        year: "numeric",
+                      })}
                     </span>
                   </div>
                 </li>
